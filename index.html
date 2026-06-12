@@ -33,6 +33,11 @@
 </head>
 <body class="bg-lightBg text-gray-800 dark:bg-darkBg dark:text-gray-100 min-h-screen pb-32 relative floral-overlay">
 
+    <div id="floatingNoti" class="fixed top-5 left-1/2 transform -translate-x-1/2 z-[9999] bg-gradient-to-r from-emerald-600 to-teal-600 text-white font-bold text-xs px-6 py-3 rounded-full shadow-2xl flex items-center space-x-2 opacity-0 pointer-events-none transition-all duration-300">
+        <i class="fa-solid fa-circle-check text-sm"></i>
+        <span id="floatingNotiText">စာရင်းအား အောင်မြင်စွာ သိမ်းဆည်းပြီးပါပြီ။</span>
+    </div>
+
     <nav class="max-w-md mx-auto pt-4 px-4 flex justify-between items-center">
         <div class="flex items-center space-x-2">
             <i class="fa-solid fa-heart text-goldTheme text-sm animate-pulse"></i>
@@ -74,8 +79,7 @@
     </header>
 
     <main class="max-w-md mx-auto px-4 mt-4 space-y-4">
-
-        <div id="paneDashboard" class="space-y-4 tab-content-view">
+                <div id="paneDashboard" class="space-y-4 tab-content-view">
             <div class="grid grid-cols-3 gap-2 text-center">
                 <div class="bg-white dark:bg-cardBg border border-gray-200 dark:border-gray-800/60 p-3 rounded-xl shadow-sm">
                     <div class="text-[10px] text-gray-500 dark:text-gray-400"><i class="fa-solid fa-users text-blue-500 mr-1"></i>စုစုပေါင်း</div>
@@ -154,15 +158,14 @@
                     </div>
                 </div>
                 <button onclick="saveWeddingDayGift()" class="w-full bg-amber-500 dark:bg-goldTheme text-white dark:text-black font-bold py-2 rounded-xl text-xs shadow-md">
-                    <i class="fa-solid fa-check-double mr-1"></i>တက်ရောက်မှုနှင့် လက်ဖွဲ့စာရင်းသိမ်းမည်
+                    <i class="fa-solid fa-check-double mr-1"></i>တက်ရောက်မှုနှင့် လက်ဖွဲ့စာရင်းသိမည်
                 </button>
             </div>
 
             <div id="guestRowsStack" class="space-y-2"></div>
             <div class="text-center pt-4 text-[10px] text-gray-400 dark:text-gray-600 tracking-wider font-mono">Developed by Zwe Maung Maung</div>
         </div>
-
-        <div id="paneAddbox" class="bg-white dark:bg-cardBg border border-gray-200 dark:border-gray-800/80 rounded-2xl p-5 space-y-4 hidden shadow-2xl tab-content-view">
+                <div id="paneAddbox" class="bg-white dark:bg-cardBg border border-gray-200 dark:border-gray-800/80 rounded-2xl p-5 space-y-4 hidden shadow-2xl tab-content-view">
             <h3 id="formTitleHeader" class="text-xs font-bold text-amber-600 dark:text-goldTheme flex items-center"><i class="fa-solid fa-user-plus mr-2"></i>ဧည့်သည်စာရင်း အသစ်ထည့်သွင်းရန်</h3>
             
             <form id="mainGuestForm" class="space-y-4 text-xs">
@@ -258,6 +261,7 @@
             getFirestore, collection, addDoc, updateDoc, doc, onSnapshot, query, orderBy, serverTimestamp 
         } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
+        // Firebase Configuration 
         const firebaseConfig = {
             apiKey: "AIzaSyA8_BFKL5Quyw_nnRU2MYTemsUZJm0pjMQ",
             authDomain: "wedding-app-1dc0f.firebaseapp.com",
@@ -277,6 +281,20 @@
 
         let guestsList = [];
         let activeFilter = 'အားလုံး';
+
+        // 🔔 TRIGGER FLOATING TOAST NOTIFICATION FUNCTION
+        function showFloatingNoti(text) {
+            const notiEl = document.getElementById('floatingNoti');
+            document.getElementById('floatingNotiText').innerText = text;
+            
+            notiEl.classList.remove('opacity-0', 'pointer-events-none');
+            notiEl.classList.add('opacity-100');
+
+            setTimeout(() => {
+                notiEl.classList.remove('opacity-100');
+                notiEl.classList.add('opacity-0', 'pointer-events-none');
+            }, 3000);
+        }
 
         // --- 🌓 LIGHT / DARK MODE TOGGLE CONTROLLER ---
         window.toggleTheme = function() {
@@ -304,7 +322,6 @@
             activeNav.classList.add('text-goldTheme');
             activeNav.classList.remove('text-gray-400', 'dark:text-gray-500');
 
-            // Reset title on form tab if not editing
             if(panelId === 'addbox' && !document.getElementById('formGuestId').value) {
                 document.getElementById('formTitleHeader').innerHTML = `<i class="fa-solid fa-user-plus mr-2"></i>ဧည့်သည်စာရင်း အသစ်ထည့်သွင်းရန်`;
                 document.getElementById('formSubmitBtn').innerHTML = `<i class="fa-solid fa-floppy-disk mr-1.5"></i>မင်္ဂလာစာရင်းထဲသို့ သိမ်းဆည်းမည်`;
@@ -313,7 +330,7 @@
 
         async function logSystemTrail(message) {
             try {
-                await addDoc(logsRef, { user: "System", action: message, timestamp: serverTimestamp() });
+                await addDoc(logsRef, { action: message, timestamp: serverTimestamp() });
             } catch (e) { console.error(e); }
         }
 
@@ -361,11 +378,11 @@
                 photoUrl: document.getElementById('cfgPhotoUrl').value
             };
             await addDoc(configRef, data);
-            await logSystemTrail("မင်္ဂလာပွဲ၏ Profile အချက်အလက်များနှင့် Cover ပုံကို အဆင့်မြှင့်တင်လိုက်သည်။");
+            showFloatingNoti("မင်္ဂလာပွဲ အချက်အလက်များကို သိမ်းဆည်းပြီးပါပြီ။");
             switchPanel('dashboard');
         });
 
-        // --- 💾 ADD / EDIT FORM ENGINE (AUTO-RESET/CLEAR ENABLED) ---
+        // --- 💾 ADD / EDIT FORM ENGINE (AUTO-RESET CLEAR) ---
         const mainGuestForm = document.getElementById('mainGuestForm');
         mainGuestForm.addEventListener('submit', async (e) => {
             e.preventDefault();
@@ -377,15 +394,13 @@
 
             try {
                 if(id) {
-                    // Update mode: keep existing wedding day gift properties intact
                     await updateDoc(doc(db, "guests", id), {
                         name: nameValue,
                         type: typeValue,
                         status: statusValue
                     });
-                    await logSystemTrail(`ဧည့်သည် "${nameValue}" ၏ အချက်အလက်များကို အောင်မြင်စွာ ပြင်ဆင်လိုက်သည်။`);
+                    showFloatingNoti(`ဧည့်သည် "${nameValue}" စာရင်းကို ပြင်ဆင်ပြီးပါပြီ။`);
                 } else {
-                    // Create mode: fresh pre-wedding state insertion
                     await addDoc(guestsRef, {
                         name: nameValue,
                         type: typeValue,
@@ -394,17 +409,16 @@
                         giftItem: "",
                         attended: false
                     });
-                    await logSystemTrail(`ဧည့်သည်အသစ် တိုးလိုက်သည် - "${nameValue}" (${typeValue})`);
+                    showFloatingNoti(`ဧည့်သည်သစ် "${nameValue}" ကို အောင်မြင်စွာ သိမ်းဆည်းပြီးပါပြီ။`);
                 }
                 
-                // ⚡ AUTO CLEAR FORM IMMEDIATELY AFTER SUBMIT ⚡
                 mainGuestForm.reset();
                 document.getElementById('formGuestId').value = '';
                 switchPanel('guests');
-            } catch (err) { console.error("Error saving data: ", err); }
+            } catch (err) { console.error(err); }
         });
 
-        // --- ✏️ CRITICAL EDIT INTERACTION (OPENS ADD NEW TAB WITH LOADED VALUES) ---
+        // --- ✏️ EDIT ACTION TRACK ---
         window.openEditGuest = function(id) {
             const g = guestsList.find(x => x.id === id);
             if(g) {
@@ -451,7 +465,7 @@
                     giftItem: item
                 });
                 const name = guestsList.find(x => x.id === id)?.name || '';
-                await logSystemTrail(`မင်္ဂလာပွဲနေ့ လက်ဖွဲ့စာရင်းသွင်းပြီး - "${name}" [လက်ဖွဲ့ငွေ: ${amount.toLocaleString()} Ks]`);
+                showFloatingNoti(`"${name}" ၏ တက်ရောက်မှုနှင့် လက်ဖွဲ့ငွေ စာရင်းသွင်းပြီးပါပြီ။`);
                 closeGiftBox();
             } catch (err) { console.error(err); }
         }
@@ -459,7 +473,7 @@
         window.quickChangeAttendance = async function(id, currentState) {
             await updateDoc(doc(db, "guests", id), { attended: !currentState });
             const name = guestsList.find(x => x.id === id)?.name || '';
-            await logSystemTrail(`ပွဲနေ့ရောက်ရှိမှု အခြေအနေပြောင်းလဲခြင်း - "${name}"`);
+            showFloatingNoti(`"${name}" ၏ ပွဲရောက်ရှိမှု ပြောင်းလဲပြီးပါပြီ။`);
         }
 
         window.filterGuests = function(type) {
@@ -498,11 +512,10 @@
             document.getElementById('txtPctAttend').innerText = attendPct + "%";
             document.getElementById('barPctAttend').style.width = attendPct + "%";
 
-            // NO LONG HIDDEN: Displays real values straight away!
             document.getElementById('dashGiftAmount').innerText = `${totalGiftsSum.toLocaleString()} Ks`;
         }
 
-        // --- 👥 HIGH-PERFORMANCE MULTI-KEYWORD SEARCH STACK RENDER ---
+        // --- 👥 MULTI-KEYWORD SEARCH ENGINE ---
         function renderGuestListStack() {
             const stack = document.getElementById('guestRowsStack');
             stack.innerHTML = '';
@@ -511,7 +524,6 @@
             const filtered = guestsList.filter(g => {
                 const matchesTab = (activeFilter === 'အားလုံး' || g.type === activeFilter);
                 
-                // Intelligent search filters across name, group type, and registration status
                 const matchesName = g.name.toLowerCase().includes(searchTerm);
                 const matchesType = g.type.toLowerCase().includes(searchTerm);
                 const matchesStatus = g.status.toLowerCase().includes(searchTerm);
@@ -526,7 +538,6 @@
 
             filtered.forEach(g => {
                 const giftDisplay = g.giftItem ? ` + [${g.giftItem}]` : '';
-                // ⚡ REAL VALUE INSTEAD OF LOCK/HIDDEN TAGS ⚡
                 const amountDisplay = `${(g.giftAmount || 0).toLocaleString()} Ks`;
 
                 const div = document.createElement('div');
@@ -553,4 +564,3 @@
     </script>
 </body>
 </html>
-
