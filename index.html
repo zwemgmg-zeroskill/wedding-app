@@ -26,7 +26,6 @@
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
             background-color: #0b0b0c; 
         }
-        /* 🌸 Elegant Floral Lace Overlay for Premium Aesthetic Look */
         .floral-overlay {
             background-image: url('https://www.transparenttextures.com/patterns/floral-lace.png');
             background-repeat: repeat;
@@ -136,52 +135,60 @@
                 <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-500"><i class="fa-solid fa-magnifying-glass text-xs"></i></span>
                 <input type="text" id="guestSearchInput" oninput="searchGuests()" placeholder="ဧည့်သည်အမည် ရိုက်ရှာရန်..." class="w-full bg-cardBg border border-gray-800 rounded-xl pl-9 pr-4 py-2 text-xs focus:outline-none focus:border-goldTheme">
             </div>
+
+            <div id="wdQuickGiftBox" class="bg-[#1a1a22] border border-amber-500/30 p-4 rounded-xl space-y-3 hidden transition-all">
+                <div class="flex justify-between items-center">
+                    <span class="text-[11px] font-bold text-amber-300 uppercase tracking-wider"><i class="fa-solid fa-champagne-glasses mr-1"></i>ပွဲနေ့ရောက်ရှိမှု နှင့် လက်ဖွဲ့ငွေမှတ်တမ်း</span>
+                    <button onclick="closeGiftBox()" class="text-gray-500 hover:text-white text-xs"><i class="fa-solid fa-xmark"></i></button>
+                </div>
+                <div class="text-[12px] font-semibold text-gray-200">ဧည့်သည်: <span id="wdTargetGuestName" class="text-goldTheme"></span></div>
+                <input type="hidden" id="wdTargetGuestId">
+                
+                <div class="grid grid-cols-2 gap-2 text-xs">
+                    <div>
+                        <label class="block text-gray-400 mb-1">လက်ဖွဲ့ငွေပမာဏ (Ks)</label>
+                        <input type="number" id="wdGiftAmount" class="w-full bg-inputBg border border-gray-800 rounded-xl px-2.5 py-1.5 text-white focus:outline-none focus:border-goldTheme">
+                    </div>
+                    <div>
+                        <label class="block text-gray-400 mb-1">လက်ဖွဲ့ပစ္စည်း (ရှိလျှင်)</label>
+                        <input type="text" id="wdGiftItem" class="w-full bg-inputBg border border-gray-800 rounded-xl px-2.5 py-1.5 text-white focus:outline-none" placeholder="ဖန်ခွက်၊ ပန်းကန် စသည်">
+                    </div>
+                </div>
+                <button onclick="saveWeddingDayGift()" class="w-full bg-goldTheme text-black font-bold py-2 rounded-xl text-xs shadow-md">
+                    <i class="fa-solid fa-check-double mr-1"></i>တက်ရောက်မှုနှင့် လက်ဖွဲ့စာရင်းသိမ်းမည်
+                </button>
+            </div>
+
             <div id="guestRowsStack" class="space-y-2"></div>
         </div>
 
         <div id="paneAddbox" class="bg-cardBg border border-gray-800/80 rounded-2xl p-5 space-y-4 hidden shadow-2xl">
             <h3 id="formTitleHeader" class="text-xs font-bold text-goldTheme flex items-center"><i class="fa-solid fa-user-plus mr-2"></i>ဧည့်သည်စာရင်း အသစ်ထည့်သွင်းရန်</h3>
             
-            <form id="mainGuestForm" class="space-y-3 text-xs">
+            <form id="mainGuestForm" class="space-y-4 text-xs">
                 <input type="hidden" id="formGuestId" value="">
                 <div>
                     <label class="block text-gray-400 mb-1">ဧည့်သည်အမည်</label>
-                    <input type="text" id="formName" required class="w-full bg-inputBg border border-gray-800 rounded-xl px-3 py-2 text-white focus:outline-none focus:border-goldTheme">
+                    <input type="text" id="formName" required placeholder="ဦးမြ + ဒေါ်လှ စသည်..." class="w-full bg-inputBg border border-gray-800 rounded-xl px-3 py-2 text-white focus:outline-none focus:border-goldTheme">
                 </div>
-                <div class="grid grid-cols-2 gap-2">
-                    <div>
-                        <label class="block text-gray-400 mb-1">အုပ်စုအမျိုးအစား</label>
-                        <select id="formType" class="w-full bg-inputBg border border-gray-800 rounded-xl px-3 py-2 text-white focus:outline-none">
-                            <option value="သတို့သားဖက်">သတို့သားဖက်</option>
-                            <option value="သတို့သမီးဖက်">သတို့သမီးဖက်</option>
-                            <option value="နှစ်ဖက်မိတ်ဆွေ">နှစ်ဖက်မိတ်ဆွေ</option>
-                        </select>
-                    </div>
-                    <div>
-                        <label class="block text-gray-400 mb-1">ဖိတ်စာအခြေအနေ</label>
-                        <select id="formInviteStatus" class="w-full bg-inputBg border border-gray-800 rounded-xl px-3 py-2 text-white focus:outline-none">
-                            <option value="မရေးရသေး">မရေးရသေး</option>
-                            <option value="ရေးသားပြီး">ရေးသားပြီး</option>
-                            <option value="ဖိတ်ကြားထားပြီး">ဖိတ်ကြားထားပြီး</option>
-                        </select>
-                    </div>
+                <div>
+                    <label class="block text-gray-400 mb-1">အုပ်စုအမျိုးအစား ခွဲခြားခြင်း</label>
+                    <select id="formType" class="w-full bg-inputBg border border-gray-800 rounded-xl px-3 py-2 text-white focus:outline-none">
+                        <option value="သတို့သားဖက်">သတို့သားဖက်</option>
+                        <option value="သတို့သမီးဖက်">သတို့သမီးဖက်</option>
+                        <option value="နှစ်ဖက်မိတ်ဆွေ">နှစ်ဖက်မိတ်ဆွေ</option>
+                    </select>
                 </div>
-                <div class="grid grid-cols-2 gap-2 p-3 bg-inputBg/40 border border-gray-800/80 rounded-xl">
-                    <div>
-                        <label class="block text-gray-400 mb-1">လက်ဖွဲ့ငွေ (Ks)</label>
-                        <input type="number" id="formGiftAmount" value="0" class="w-full bg-inputBg border border-gray-800 rounded-lg px-2 py-1.5 text-white focus:outline-none">
-                    </div>
-                    <div>
-                        <label class="block text-gray-400 mb-1">လက်ဖွဲ့ပစ္စည်းမှတ်တမ်း</label>
-                        <input type="text" id="formGiftItem" class="w-full bg-inputBg border border-gray-800 rounded-lg px-2 py-1.5 text-white focus:outline-none" placeholder="မရှိပါ">
-                    </div>
-                </div>
-                <div class="flex items-center space-x-2 py-1">
-                    <input type="checkbox" id="formAttended" class="w-4 h-4 text-amber-500 rounded bg-transparent border-gray-700">
-                    <label for="formAttended" class="text-gray-300 font-medium select-none cursor-pointer">မင်္ဂလာပွဲသို့ ရောက်ရှိလာပါပြီ (Check-In)</label>
+                <div>
+                    <label class="block text-gray-400 mb-1">ဖိတ်စာ ဝေငှမှု အခြေအနေ</label>
+                    <select id="formInviteStatus" class="w-full bg-inputBg border border-gray-800 rounded-xl px-3 py-2 text-white focus:outline-none">
+                        <option value="မရေးရသေး">မရေးရသေး</option>
+                        <option value="ရေးသားပြီး">ရေးသားပြီး</option>
+                        <option value="ဖိတ်ကြားထားပြီး">ဖိတ်ကြားထားပြီး</option>
+                    </select>
                 </div>
                 <button type="submit" class="w-full bg-gradient-to-r from-amber-500 to-amber-600 text-black font-bold py-2.5 rounded-xl transition shadow-lg shadow-amber-500/10 hover:opacity-90">
-                    <i class="fa-solid fa-floppy-disk mr-1.5"></i>မင်္ဂလာစာရင်းတွင် အပြီးသတ်သိမ်းဆည်းမည်
+                    <i class="fa-solid fa-envelope mr-1.5"></i>ဖိတ်ကြားမည့် စာရင်းထဲသို့ ထည့်သွင်းမည်
                 </button>
             </form>
         </div>
@@ -242,7 +249,7 @@
             </button>
         </div>
     </div>
-        <script type="module">
+       <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
         import { 
             getFirestore, collection, addDoc, updateDoc, doc, onSnapshot, query, orderBy, serverTimestamp 
@@ -269,7 +276,7 @@
         let guestsList = [];
         let activeFilter = 'အားလုံး';
 
-        // --- 📱 TAB NAV SWITCH CONTROLLER ---
+        // --- 📱 PANEL VIEW SWITCH CONTROLLER ---
         window.switchPanel = function(panelId) {
             document.getElementById('paneDashboard').classList.add('hidden');
             document.getElementById('paneGuests').classList.add('hidden');
@@ -285,10 +292,6 @@
             });
             document.getElementById('nav-' + panelId).classList.add('text-goldTheme');
             document.getElementById('nav-' + panelId).classList.remove('text-gray-500');
-
-            if(panelId === 'addbox' && !document.getElementById('formGuestId').value) {
-                document.getElementById('formTitleHeader').innerHTML = `<i class="fa-solid fa-user-plus mr-2"></i>ဧည့်သည်စာရင်း အသစ်ထည့်သွင်းရန်`;
-            }
         }
 
         async function logSystemTrail(message) {
@@ -347,50 +350,62 @@
             switchPanel('dashboard');
         });
 
-        // --- 💾 ADD/EDIT GUEST FORM SUBMISSION TRIGGER (WORKING) ---
+        // --- 💾 ADD NEW GUEST ONLY (INVITATION TRACK FOCUS) ---
         const mainGuestForm = document.getElementById('mainGuestForm');
         mainGuestForm.addEventListener('submit', async (e) => {
             e.preventDefault();
-            const id = document.getElementById('formGuestId').value;
             const data = {
                 name: document.getElementById('formName').value,
                 type: document.getElementById('formType').value,
                 status: document.getElementById('formInviteStatus').value,
-                giftAmount: Number(document.getElementById('formGiftAmount').value) || 0,
-                giftItem: document.getElementById('formGiftItem').value,
-                attended: document.getElementById('formAttended').checked
+                giftAmount: 0, // Default 0 for pre-wedding track
+                giftItem: "",  // Default empty
+                attended: false
             };
 
             try {
-                if(id) {
-                    await updateDoc(doc(db, "guests", id), data);
-                    await logSystemTrail(`ဧည့်သည် "${data.name}" စာရင်းကို ပြင်ဆင်မွမ်းမံလိုက်သည်။`);
-                } else {
-                    await addDoc(guestsRef, data);
-                    await logSystemTrail(`ဧည့်သည်အသစ် တိုးလိုက်သည် - "${data.name}"`);
-                }
+                await addDoc(guestsRef, data);
+                await logSystemTrail(`ဖိတ်ကြားရန် ဧည့်သည်အသစ် တိုးလိုက်သည် - "${data.name}"`);
                 mainGuestForm.reset();
-                document.getElementById('formGuestId').value = '';
                 switchPanel('guests');
-            } catch (err) {
-                console.error("Error saving guest data: ", err);
-            }
+            } catch (err) { console.error(err); }
         });
 
-        window.openEditGuest = function(id) {
+        // --- 🎁 WEDDING DAY WORKFLOW TICKET ACTIONS ---
+        window.openGiftRegistration = function(id) {
             const g = guestsList.find(x => x.id === id);
             if(g) {
-                document.getElementById('formGuestId').value = g.id;
-                document.getElementById('formName').value = g.name;
-                document.getElementById('formType').value = g.type;
-                document.getElementById('formInviteStatus').value = g.status;
-                document.getElementById('formGiftAmount').value = g.giftAmount || 0;
-                document.getElementById('formGiftItem').value = g.giftItem || "";
-                document.getElementById('formAttended').checked = g.attended || false;
+                document.getElementById('wdTargetGuestId').value = g.id;
+                document.getElementById('wdTargetGuestName').innerText = g.name;
+                document.getElementById('wdGiftAmount').value = g.giftAmount || "";
+                document.getElementById('wdGiftItem').value = g.giftItem || "";
                 
-                switchPanel('addbox');
-                document.getElementById('formTitleHeader').innerHTML = `<i class="fa-solid fa-user-pen mr-2 text-goldTheme"></i>ဧည့်သည်စာရင်း အချက်အလက် ပြင်ဆင်ရန်`;
+                document.getElementById('wdQuickGiftBox').classList.remove('hidden');
+                document.getElementById('wdQuickGiftBox').scrollIntoView({ behavior: 'smooth' });
             }
+        }
+
+        window.closeGiftBox = function() {
+            document.getElementById('wdQuickGiftBox').classList.add('hidden');
+        }
+
+        window.saveWeddingDayGift = async function() {
+            const id = document.getElementById('wdTargetGuestId').value;
+            if(!id) return;
+
+            const amount = Number(document.getElementById('wdGiftAmount').value) || 0;
+            const item = document.getElementById('wdGiftItem').value;
+
+            try {
+                await updateDoc(doc(db, "guests", id), {
+                    attended: true, // Auto Check-In on gift save
+                    giftAmount: amount,
+                    giftItem: item
+                });
+                const name = guestsList.find(x => x.id === id)?.name || '';
+                await logSystemTrail(`မင်္ဂလာပွဲနေ့ လက်ဖွဲ့စာရင်းသွင်းပြီး - "${name}" [လက်ဖွဲ့ငွေ: ${amount} Ks / ပစ္စည်း: ${item || 'မရှိ'}]`);
+                closeGiftBox();
+            } catch (err) { console.error(err); }
         }
 
         window.quickChangeAttendance = async function(id, currentState) {
@@ -410,9 +425,7 @@
             renderGuestListStack();
         }
 
-        window.searchGuests = function() {
-            renderGuestListStack();
-        }
+        window.searchGuests = function() { renderGuestListStack(); }
 
         // --- 📊 CALCULATOR ENGINE ---
         function renderDashboardMetrics() {
@@ -472,8 +485,8 @@
                         </div>
                     </div>
                     <div class="text-right flex items-center space-x-3">
-                        <div class="font-mono text-[11px] text-gray-300">${amountDisplay}${giftDisplay}</div>
-                        <button onclick="openEditGuest('${g.id}')" class="p-1 text-gray-400 hover:text-goldTheme"><i class="fa-solid fa-user-pen text-xs"></i></button>
+                        <div class="font-mono text-[11px] text-gray-300">${g.attended ? `${amountDisplay}${giftDisplay}` : '<span class="text-gray-500 italic text-[10px]">မလာသေးပါ</span>'}</div>
+                        <button onclick="openGiftRegistration('${g.id}')" class="bg-[#1e1e24] border border-gray-800 text-[10px] text-amber-400 px-2 py-1 rounded hover:border-goldTheme transition"><i class="fa-solid fa-gift"></i> လက်ဖွဲ့မှတ်ရန်</button>
                     </div>
                 `;
                 stack.appendChild(div);
