@@ -1,295 +1,228 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ever After - Premium Wedding Guest Management</title>
+    <title>Ever After - Premium Wedding Dashboard</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@400;700&family=Montserrat:wght@300;400;600;700&display=swap" rel="stylesheet">
-    <style>
-        body { font-family: 'Montserrat', sans-serif; }
-        .wedding-title { font-family: 'Comfortaa', cursive; }
-        /* Floral background vector accent via CSS hints */
-        .floral-accent {
-            background-image: url('https://images.unsplash.com/photo-1526047932273-341f2a7631f9?q=80&w=100&auto=format&fit=crop');
-            background-blend-mode: overlay;
-        }
-    </style>
     <script>
         tailwind.config = {
             darkMode: 'class',
             theme: {
                 extend: {
                     colors: {
-                        weddingGold: '#dfb76c',
-                        weddingDark: '#121214',
-                        weddingCard: '#1a1a1e'
+                        goldTheme: '#dfb76c',
+                        darkBg: '#0b0b0c',
+                        cardBg: '#131316',
+                        inputBg: '#1c1c21'
                     }
                 }
             }
         }
     </script>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #0b0b0c; }
+        .floral-bg {
+            background-image: url('https://www.transparenttextures.com/patterns/pinstripe.png');
+        }
+    </style>
 </head>
-<body class="bg-[#0f0f11] text-gray-200 min-h-screen relative overflow-x-hidden transition-colors duration-200">
+<body class="text-gray-100 min-h-screen pb-24 floral-bg">
 
-    <div class="absolute top-0 right-0 w-48 h-48 opacity-10 pointer-events-none bg-contain bg-no-repeat" style="background-image: url('https://cdn-icons-png.flaticon.com/512/3038/3038411.png');"></div>
-    <div class="absolute top-0 left-0 w-48 h-48 opacity-10 pointer-events-none bg-contain bg-no-repeat rotate-270" style="background-image: url('https://cdn-icons-png.flaticon.com/512/3038/3038411.png');"></div>
-
-    <nav class="border-b border-gray-800 bg-[#16161a]/90 backdrop-blur-md px-6 py-4 flex justify-between items-center sticky top-0 z-50">
-        <div class="flex items-center space-x-3">
-            <div class="w-9 h-9 rounded-full bg-gradient-to-tr from-amber-400 to-pink-500 flex items-center justify-center shadow-lg shadow-pink-500/10">
-                <i class="fa-solid fa-heart text-white text-md animate-pulse"></i>
-            </div>
-            <div>
-                <h1 class="text-lg font-bold tracking-wider wedding-title text-transparent bg-clip-text bg-gradient-to-r from-amber-200 to-amber-400">Ever After</h1>
-                <p class="text-[10px] uppercase tracking-widest text-weddingGold/70">Premium Wedding System</p>
-            </div>
-        </div>
-
-        <div class="flex items-center space-x-4">
-            <select id="roleSelect" class="bg-[#1e1e24] text-xs text-weddingGold border border-weddingGold/30 px-3 py-1.5 rounded-lg font-medium focus:ring-1 focus:ring-weddingGold focus:outline-none">
-                <option value="admin">🔑 Admin Mode</option>
-                <option value="staff">📋 Staff Mode</option>
-            </select>
-        </div>
-    </nav>
-
-    <main class="max-w-7xl mx-auto p-4 md:p-6 space-y-6">
-
-        <section class="bg-gradient-to-r from-[#18181c] to-[#22222a] border border-gray-800 rounded-2xl p-6 shadow-xl relative overflow-hidden flex flex-col md:flex-row items-center justify-between gap-6">
-            <div class="absolute top-0 right-0 p-4 opacity-5"><i class="fa-solid fa-ribbon text-8xl text-weddingGold"></i></div>
+    <header class="max-w-md mx-auto pt-6 px-4">
+        <div class="bg-gradient-to-b from-[#18181c] to-cardBg border border-gray-800/80 rounded-2xl p-5 text-center relative overflow-hidden shadow-xl">
+            <div class="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-goldTheme to-transparent"></div>
             
-            <div class="flex items-center space-x-4 z-10">
-                <div class="relative w-24 h-24 rounded-full border-2 border-weddingGold p-1 bg-[#1a1a1e]">
-                    <img id="couplePhotoFrame" src="https://images.unsplash.com/photo-1519741497674-611481863552?q=80&w=200&auto=format&fit=crop" class="w-full h-full object-cover rounded-full" alt="Couple image">
+            <h1 class="text-lg font-semibold tracking-wide text-transparent bg-clip-text bg-gradient-to-r from-amber-100 to-amber-300 flex justify-center items-center space-x-2">
+                <span id="headerGroom">သတို့သား</span>
+                <span class="text-xs text-goldTheme/60">&</span>
+                <span id="headerBride">သတို့သမီး</span>
+            </h1>
+
+            <div class="grid grid-cols-2 gap-2 mt-4 text-[11px] text-gray-400">
+                <div class="bg-inputBg/60 py-2 px-3 rounded-xl border border-gray-800/40 flex items-center justify-center space-x-2">
+                    <i class="fa-solid fa-calendar-heart text-goldTheme"></i>
+                    <span id="headerDate">2026-06-09</span>
                 </div>
-                <div>
-                    <div class="flex items-center space-x-2 text-xl font-bold tracking-wide">
-                        <span id="displayGroom" class="text-blue-400">သတို့သား</span>
-                        <span class="text-weddingGold text-sm">&</span>
-                        <span id="displayBride" class="text-pink-400">သတို့သမီး</span>
-                    </div>
-                    <div class="text-xs text-gray-400 mt-1 flex flex-col space-y-1">
-                        <span><i class="fa-solid fa-calendar-days text-weddingGold mr-1.5"></i>မင်္ဂလာရက်စွဲ: <span id="displayDate" class="text-gray-200">သတ်မှတ်ရန်</span></span>
-                        <span><i class="fa-solid fa-location-dot text-weddingGold mr-2"></i>ကျင်းပမည့်နေရာ: <span id="displayVenue" class="text-gray-200">သတ်မှတ်ရန်</span></span>
-                    </div>
+                <div class="bg-inputBg/60 py-2 px-3 rounded-xl border border-gray-800/40 flex items-center justify-center space-x-2">
+                    <i class="fa-solid fa-hotel text-goldTheme"></i>
+                    <span id="headerVenue">Hotel</span>
+                </div>
+            </div>
+            <p class="text-[10px] text-goldTheme/50 mt-3 italic">"We look forward to celebrating with you!"</p>
+        </div>
+    </header>
+
+    <main class="max-w-md mx-auto px-4 mt-4 space-y-4">
+
+        <div id="paneDashboard" class="space-y-4">
+            <div class="grid grid-cols-3 gap-2 text-center">
+                <div class="bg-cardBg border border-gray-800/60 p-3 rounded-xl">
+                    <div class="text-[10px] text-gray-400"><i class="fa-solid fa-users text-blue-400 mr-1"></i>စုစုပေါင်း</div>
+                    <div id="dashTotal" class="text-md font-bold mt-1">0</div>
+                </div>
+                <div class="bg-cardBg border border-gray-800/60 p-3 rounded-xl">
+                    <div class="text-[10px] text-gray-400"><i class="fa-solid fa-envelope text-amber-400 mr-1"></i>ဖိတ်ပြီး</div>
+                    <div id="dashInvited" class="text-md font-bold mt-1 text-amber-300">0</div>
+                </div>
+                <div class="bg-cardBg border border-gray-800/60 p-3 rounded-xl">
+                    <div class="text-[10px] text-gray-400"><i class="fa-solid fa-circle-check text-emerald-400 mr-1"></i>ရောက်ရှိ</div>
+                    <div id="dashAttended" class="text-md font-bold mt-1 text-emerald-400">0</div>
+                </div>
+            </div>
+            <div class="grid grid-cols-2 gap-2 text-center">
+                <div class="bg-cardBg border border-gray-800/60 p-2.5 rounded-xl text-xs flex justify-between px-4 items-center">
+                    <span class="text-gray-400"><i class="fa-solid fa-pen text-purple-400 mr-1.5"></i>ရေးသားပြီး:</span>
+                    <span id="dashDrafted" class="font-bold">0</span>
+                </div>
+                <div class="bg-cardBg border border-gray-800/60 p-2.5 rounded-xl text-xs flex justify-between px-4 items-center">
+                    <span class="text-gray-400"><i class="fa-solid fa-clock text-gray-400 mr-1.5"></i>မရေးရသေး:</span>
+                    <span id="dashPending" class="font-bold">0</span>
                 </div>
             </div>
 
-            <button id="toggleConfigBtn" class="text-xs bg-[#1e1e24] hover:bg-[#272730] border border-gray-700 text-gray-300 px-4 py-2 rounded-xl transition flex items-center space-x-2">
-                <i class="fa-solid fa-gear text-weddingGold"></i>
-                <span>ပွဲအချက်အလက်နှင့် UI ပြင်ဆင်ရန်</span>
-            </button>
-        </section>
-
-        <section id="configSection" class="bg-[#16161a] border border-weddingGold/20 p-5 rounded-2xl hidden space-y-4 shadow-2xl">
-            <h3 class="text-sm font-bold text-weddingGold flex items-center"><i class="fa-solid fa-wand-magic-sparkles mr-2"></i>ပွဲအသေးစိတ် နှင့် ပုံရိပ်စီမံခန့်ခွဲမှု</h3>
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-4 text-xs">
+            <div class="bg-gradient-to-r from-cardBg to-[#1a1a22] border border-gray-800 p-4 rounded-xl flex items-center justify-between">
                 <div>
-                    <label class="block text-gray-400 mb-1">သတို့သားအမည်</label>
-                    <input type="text" id="cfgGroom" class="w-full bg-[#202026] border border-gray-700 rounded-lg p-2 text-white focus:outline-none focus:border-weddingGold">
+                    <div class="text-[10px] text-gray-400 uppercase tracking-wider">Total Gift Amount</div>
+                    <div id="dashGiftAmount" class="text-lg font-bold text-goldTheme mt-0.5">****** Ks</div>
                 </div>
-                <div>
-                    <label class="block text-gray-400 mb-1">သတို့သမီးအမည်</label>
-                    <input type="text" id="cfgBride" class="w-full bg-[#202026] border border-gray-700 rounded-lg p-2 text-white focus:outline-none focus:border-weddingGold">
-                </div>
-                <div>
-                    <label class="block text-gray-400 mb-1">မင်္ဂလာရက်စွဲ</label>
-                    <input type="date" id="cfgDate" class="w-full bg-[#202026] border border-gray-700 rounded-lg p-2 text-white focus:outline-none focus:border-weddingGold">
-                </div>
-                <div>
-                    <label class="block text-gray-400 mb-1">ကျင်းပမည့်နေရာ</label>
-                    <input type="text" id="cfgVenue" class="w-full bg-[#202026] border border-gray-700 rounded-lg p-2 text-white focus:outline-none focus:border-weddingGold">
-                </div>
-            </div>
-            <div class="text-xs pt-2">
-                <label class="block text-gray-400 mb-1">Couple Image / Logo URL</label>
-                <input type="text" id="cfgPhotoUrl" placeholder="https://example.com/image.jpg" class="w-full bg-[#202026] border border-gray-700 rounded-lg p-2 text-white focus:outline-none focus:border-weddingGold">
-            </div>
-            <div class="flex justify-end pt-2">
-                <button id="saveConfigBtn" class="bg-gradient-to-r from-amber-500 to-amber-600 text-black font-bold px-4 py-2 rounded-lg text-xs transition">သိုလှောင်သိမ်းဆည်းမည်</button>
-            </div>
-        </section>
-
-        <section class="grid grid-cols-2 md:grid-cols-5 gap-3">
-            <div class="bg-[#16161a] p-4 rounded-xl border border-gray-800/60 text-center">
-                <div class="text-xs text-gray-400">စုစုပေါင်း ဧည့်သည်</div>
-                <div id="statTotal" class="text-xl font-bold mt-1 text-white">0</div>
-            </div>
-            <div class="bg-[#16161a] p-4 rounded-xl border border-gray-800/60 text-center">
-                <div class="text-xs text-gray-400">ဖိတ်ကြားပြီး</div>
-                <div id="statInvited" class="text-xl font-bold mt-1 text-amber-300">0</div>
-            </div>
-            <div class="bg-[#16161a] p-4 rounded-xl border border-gray-800/60 text-center">
-                <div class="text-xs text-gray-400">ရောက်ရှိလာသူ</div>
-                <div id="statAttended" class="text-xl font-bold mt-1 text-emerald-400">0</div>
-            </div>
-            <div class="bg-[#16161a] p-4 rounded-xl border border-gray-800/60 text-center">
-                <div class="text-xs text-gray-400">ရေးသားပြီး</div>
-                <div id="statDrafted" class="text-xl font-bold mt-1 text-blue-400">0</div>
-            </div>
-            <div class="bg-[#16161a] p-4 rounded-xl border border-gray-800/60 text-center col-span-2 md:col-span-1">
-                <div class="text-xs text-gray-400">မရေးရသေး</div>
-                <div id="statPending" class="text-xl font-bold mt-1 text-gray-400">0</div>
-            </div>
-        </section>
-
-        <section class="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <div class="bg-[#16161a] p-5 rounded-2xl border border-gray-800/60 md:col-span-2 space-y-4">
-                <h4 class="text-xs font-bold uppercase tracking-wider text-weddingGold">Invitation Tracking</h4>
-                <div class="space-y-3">
-                    <div>
-                        <div class="flex justify-between text-xs text-gray-400 mb-1">
-                            <span>ဖိတ်စာပေးဝေမှု ရာခိုင်နှုန်း</span>
-                            <span id="lblProgressInvite">0%</span>
-                        </div>
-                        <div class="w-full bg-gray-800 h-2 rounded-full overflow-hidden">
-                            <div id="barProgressInvite" class="bg-gradient-to-r from-amber-400 to-amber-200 h-full transition-all duration-500" style="width: 0%"></div>
-                        </div>
-                    </div>
-                    <div>
-                        <div class="flex justify-between text-xs text-gray-400 mb-1">
-                            <span>ဧည့်သည် လာရောက်မှုနှုန်း</span>
-                            <span id="lblProgressAttend">0%</span>
-                        </div>
-                        <div class="w-full bg-gray-800 h-2 rounded-full overflow-hidden">
-                            <div id="barProgressAttend" class="bg-gradient-to-r from-emerald-500 to-teal-300 h-full transition-all duration-500" style="width: 0%"></div>
-                        </div>
-                    </div>
-                </div>
+                <div class="w-10 h-10 rounded-full bg-amber-500/10 flex items-center justify-center text-goldTheme"><i class="fa-solid fa-wallet"></i></div>
             </div>
 
-            <div class="bg-gradient-to-b from-[#1c1c22] to-[#16161a] p-5 rounded-2xl border border-weddingGold/10 flex flex-col justify-between">
+            <div class="bg-cardBg border border-gray-800/60 p-4 rounded-xl space-y-3">
+                <div class="text-[11px] font-bold text-goldTheme uppercase tracking-wider">Invitation Tracking</div>
                 <div>
-                    <h4 class="text-xs font-bold uppercase tracking-wider text-weddingGold">Total Gift Metrics</h4>
-                    <div class="mt-4">
-                        <div class="text-[10px] uppercase text-gray-400 tracking-widest">စုစုပေါင်း လက်ဖွဲ့ငွေ</div>
-                        <div id="dashFinancialSum" class="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-yellow-200 to-amber-400 mt-1">****** Kyats</div>
-                    </div>
+                    <div class="flex justify-between text-[10px] text-gray-400 mb-1"><span>ဖိတ်စာပေးဝေပြီးစီးမှု</span><span id="txtPctInvite">0%</span></div>
+                    <div class="w-full bg-gray-800 h-1.5 rounded-full overflow-hidden"><div id="barPctInvite" class="bg-goldTheme h-full transition-all duration-300" style="width:0%"></div></div>
                 </div>
-                <div class="text-[10px] text-gray-500 flex items-center space-x-1 pt-2">
-                    <i class="fa-solid fa-shield-halved"></i>
-                    <span>Role-based encryption active</span>
+                <div>
+                    <div class="flex justify-between text-[10px] text-gray-400 mb-1"><span>ပွဲတက်ရောက်လာမှုနှုန်း</span><span id="txtPctAttend">0%</span></div>
+                    <div class="w-full bg-gray-800 h-1.5 rounded-full overflow-hidden"><div id="barPctAttend" class="bg-emerald-500 h-full transition-all duration-300" style="width:0%"></div></div>
                 </div>
             </div>
-        </section>
-
-        <div class="flex border-b border-gray-800 space-x-2">
-            <button id="tabInvite" class="px-5 py-3 text-sm font-bold border-b-2 border-weddingGold text-weddingGold focus:outline-none flex items-center space-x-2">
-                <i class="fa-solid fa-envelope-open-text"></i>
-                <span>၁။ ဖိတ်စာစီမံခန့်ခွဲမှု (အကြိုကဏ္ဍ)</span>
-            </button>
-            <button id="tabEvent" class="px-5 py-3 text-sm font-medium border-b-2 border-transparent text-gray-400 hover:text-gray-200 focus:outline-none flex items-center space-x-2">
-                <i class="fa-solid fa-champagne-glasses"></i>
-                <span>၂။ ပွဲနေ့တက်ရောက်မှုနှင့် လက်ဖွဲ့စာရင်း</span>
-            </button>
         </div>
 
-        <section id="paneInvite" class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-            <div class="bg-[#16161a] p-5 rounded-2xl border border-gray-800/60 h-fit">
-                <h3 class="text-sm font-bold mb-4 text-weddingGold"><i class="fa-solid fa-user-plus mr-2"></i>ဖိတ်စာစာရင်း သွင်းရန်</h3>
-                <form id="frmInvite" class="space-y-4 text-xs">
-                    <input type="hidden" class="g-id">
+        <div id="paneGuests" class="space-y-3 hidden">
+            <div class="flex bg-cardBg p-1 rounded-xl border border-gray-800/60 text-[11px]">
+                <button onclick="filterGuests('အားလုံး')" class="subtab-btn flex-1 py-1.5 rounded-lg text-center font-medium bg-inputBg text-goldTheme">အားလုံး</button>
+                <button onclick="filterGuests('သတို့သားဖက်')" class="subtab-btn flex-1 py-1.5 rounded-lg text-center font-medium text-gray-400">သတို့သား</button>
+                <button onclick="filterGuests('သတို့သမီးဖက်')" class="subtab-btn flex-1 py-1.5 rounded-lg text-center font-medium text-gray-400">သတို့သမီး</button>
+                <button onclick="filterGuests('နှစ်ဖက်မိတ်ဆွေ')" class="subtab-btn flex-1 py-1.5 rounded-lg text-center font-medium text-gray-400">နှစ်ဖက်မိတ်ဆွေ</button>
+            </div>
+            <div class="relative">
+                <span class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none text-gray-500"><i class="fa-solid fa-magnifying-glass text-xs"></i></span>
+                <input type="text" id="guestSearchInput" oninput="searchGuests()" placeholder="ဧည့်သည်အမည် ရှာဖွေရန်..." class="w-full bg-cardBg border border-gray-800 rounded-xl pl-9 pr-4 py-2 text-xs focus:outline-none focus:border-goldTheme">
+            </div>
+            <div id="guestRowsStack" class="space-y-2">
+                </div>
+        </div>
+
+        <div id="paneAddBox" class="bg-cardBg border border-gray-800/80 rounded-2xl p-5 space-y-4 hidden">
+            <h3 class="text-sm font-bold text-goldTheme flex items-center"><i class="fa-solid fa-user-plus mr-2"></i>ဧည့်သည်စာရင်း အသစ်ထည့်သွင်းရန်</h3>
+            <form id="mainGuestForm" class="space-y-3 text-xs">
+                <input type="hidden" id="formGuestId">
+                <div>
+                    <label class="block text-gray-400 mb-1">ဧည့်သည်အမည်</label>
+                    <input type="text" id="formName" required class="w-full bg-inputBg border border-gray-800 rounded-xl px-3 py-2 text-white focus:outline-none focus:border-goldTheme">
+                </div>
+                <div class="grid grid-cols-2 gap-2">
                     <div>
-                        <label class="block text-gray-400 mb-1">ဧည့်သည်အမည်</label>
-                        <input type="text" class="g-name w-full bg-[#1e1e24] border border-gray-700 rounded-lg px-3 py-2 text-white focus:outline-none focus:border-weddingGold" required>
-                    </div>
-                    <div>
-                        <label class="block text-gray-400 mb-1">အုပ်စု ခွဲခြားခြင်း</label>
-                        <select class="g-type w-full bg-[#1e1e24] border border-gray-700 rounded-lg px-3 py-2 text-white focus:outline-none focus:border-weddingGold">
+                        <label class="block text-gray-400 mb-1">အုပ်စုအမျိုးအစား</label>
+                        <select id="formType" class="w-full bg-inputBg border border-gray-800 rounded-xl px-3 py-2 text-white focus:outline-none">
                             <option value="သတို့သားဖက်">သတို့သားဖက်</option>
                             <option value="သတို့သမီးဖက်">သတို့သမီးဖက်</option>
                             <option value="နှစ်ဖက်မိတ်ဆွေ">နှစ်ဖက်မိတ်ဆွေ</option>
                         </select>
                     </div>
                     <div>
-                        <label class="block text-gray-400 mb-1">ဖိတ်စာ အခြေအနေ</label>
-                        <select class="g-status w-full bg-[#1e1e24] border border-gray-700 rounded-lg px-3 py-2 text-white focus:outline-none focus:border-weddingGold">
+                        <label class="block text-gray-400 mb-1">ဖိတ်စာအခြေအနေ</label>
+                        <select id="formInviteStatus" class="w-full bg-inputBg border border-gray-800 rounded-xl px-3 py-2 text-white focus:outline-none">
                             <option value="မရေးရသေး">မရေးရသေး</option>
                             <option value="ရေးသားပြီး">ရေးသားပြီး</option>
                             <option value="ဖိတ်ကြားထားပြီး">ဖိတ်ကြားထားပြီး</option>
                         </select>
                     </div>
+                </div>
+                <div class="grid grid-cols-2 gap-2 p-3 bg-inputBg/40 border border-gray-800 rounded-xl">
                     <div>
-                        <label class="block text-gray-400 mb-1">မှတ်ချက်</label>
-                        <textarea class="g-notes w-full bg-[#1e1e24] border border-gray-700 rounded-lg px-3 py-2 text-white focus:outline-none focus:border-weddingGold" rows="2"></textarea>
-                    </div>
-                    <button type="submit" class="w-full bg-gradient-to-r from-amber-500 to-amber-600 text-black font-bold py-2.5 rounded-lg transition">
-                        <i class="fa-solid fa-floppy-disk mr-1.5"></i>ဖိတ်စာအချက်အလက် သိမ်းဆည်းမည်
-                    </button>
-                </form>
-            </div>
-            
-            <div class="lg:col-span-2 bg-[#16161a] p-5 rounded-2xl border border-gray-800/60">
-                <table class="w-full text-left text-xs">
-                    <thead>
-                        <tr class="border-b border-gray-800 text-gray-400 uppercase tracking-wider">
-                            <th class="p-3">အမည် / အုပ်စု</th>
-                            <th class="p-3">ဖိတ်စာအခြေအနေ</th>
-                            <th class="p-3">မှတ်ချက်</th>
-                            <th class="p-3 text-right">လုပ်ဆောင်ချက်</th>
-                        </tr>
-                    </thead>
-                    <tbody id="tbodyInvite" class="divide-y divide-gray-800/50"></tbody>
-                </table>
-            </div>
-        </section>
-
-        <section id="paneEvent" class="grid grid-cols-1 lg:grid-cols-3 gap-6 hidden">
-            <div class="bg-[#16161a] p-5 rounded-2xl border border-gray-800/60 h-fit">
-                <h3 class="text-sm font-bold mb-4 text-weddingGold"><i class="fa-solid fa-calculator mr-2"></i>ပွဲနေ့ လက်ဖွဲ့စာရင်းသွင်းရန်</h3>
-                <form id="frmEvent" class="space-y-4 text-xs">
-                    <div class="bg-[#1e1e24] p-3 rounded-xl border border-gray-700">
-                        <span class="text-[10px] text-gray-400 block uppercase">ရွေးချယ်ထားသည့် ဧည့်သည်</span>
-                        <div id="wdGuestLabel" class="text-sm font-bold text-amber-200 mt-1 italic">စာရင်းမှ ဧည့်သည်ကို ရွေးချယ်ပါ ⬇️</div>
-                        <input type="hidden" id="wdId">
-                    </div>
-                    <div class="flex items-center space-x-3 p-3 bg-emerald-950/20 border border-emerald-800/30 rounded-xl">
-                        <input type="checkbox" id="wdAttended" class="w-4 h-4 text-emerald-500 rounded focus:ring-0 bg-transparent border-gray-700">
-                        <label for="wdAttended" class="font-bold text-gray-300 select-none cursor-pointer">ပွဲသို့ ရောက်ရှိလာပါပြီ (Check-In)</label>
-                    </div>
-                    <div>
-                        <label class="block text-gray-400 mb-1">လက်ဖွဲ့ငွေ (MMK)</label>
-                        <input type="number" id="wdAmount" value="0" class="w-full bg-[#1e1e24] border border-gray-700 rounded-lg px-3 py-2 text-white focus:outline-none focus:border-weddingGold">
+                        <label class="block text-gray-400 mb-1">လက်ဖွဲ့ငွေပမာဏ</label>
+                        <input type="number" id="formGiftAmount" value="0" class="w-full bg-inputBg border border-gray-800 rounded-lg px-2 py-1.5 text-white focus:outline-none">
                     </div>
                     <div>
                         <label class="block text-gray-400 mb-1">လက်ဖွဲ့ပစ္စည်း</label>
-                        <input type="text" id="wdItem" placeholder="မရှိပါ" class="w-full bg-[#1e1e24] border border-gray-700 rounded-lg px-3 py-2 text-white focus:outline-none focus:border-weddingGold">
+                        <input type="text" id="formGiftItem" class="w-full bg-inputBg border border-gray-800 rounded-lg px-2 py-1.5 text-white focus:outline-none" placeholder="မရှိပါ">
                     </div>
-                    <button type="submit" id="wdSubmitBtn" disabled class="w-full bg-gray-700 text-gray-400 font-bold py-2.5 rounded-lg cursor-not-allowed transition">
-                        <i class="fa-solid fa-check-double mr-1.5"></i>လက်ဖွဲ့မှတ်တမ်း သိမ်းဆည်းမည်
-                    </button>
-                </form>
-            </div>
+                </div>
+                <div class="flex items-center space-x-2 py-1">
+                    <input type="checkbox" id="formAttended" class="w-4 h-4 text-amber-500 rounded bg-transparent border-gray-700">
+                    <label for="formAttended" class="text-gray-300 font-medium select-none cursor-pointer">မင်္ဂလာပွဲသို့ ရောက်ရှိလာပါပြီ (Check-In)</label>
+                </div>
+                <button type="submit" class="w-full bg-gradient-to-r from-amber-500 to-amber-600 text-black font-bold py-2.5 rounded-xl transition shadow-lg shadow-amber-500/10">
+                    <i class="fa-solid fa-floppy-disk mr-1.5"></i>မင်္ဂလာစာရင်းတွင် သိမ်းဆည်းမည်
+                </button>
+            </form>
+        </div>
 
-            <div class="lg:col-span-2 bg-[#16161a] p-5 rounded-2xl border border-gray-800/60">
-                <table class="w-full text-left text-xs">
-                    <thead>
-                        <tr class="border-b border-gray-800 text-gray-400 uppercase tracking-wider">
-                            <th class="p-3">ရောက်ရှိ</th>
-                            <th class="p-3">ဧည့်သည်အမည်</th>
-                            <th class="p-3">လက်ဖွဲ့မှတ်တမ်း</th>
-                            <th class="p-3 text-right">လုပ်ဆောင်ချက်</th>
-                        </tr>
-                    </thead>
-                    <tbody id="tbodyEvent" class="divide-y divide-gray-800/50"></tbody>
-                </table>
-            </div>
-        </section>
+        <div id="paneLogs" class="bg-cardBg border border-gray-800/60 p-4 rounded-xl hidden space-y-2">
+            <div class="text-[11px] font-bold text-gray-400 uppercase tracking-wider mb-2"><i class="fa-solid fa-clock-rotate-left mr-1.5"></i>System Audit Logs</div>
+            <div id="logsWrapper" class="font-mono text-[10px] text-gray-500 h-64 overflow-y-auto space-y-1"></div>
+        </div>
 
-        <section class="bg-[#16161a] p-4 rounded-2xl border border-gray-800/60">
-            <div class="text-[10px] text-gray-500 uppercase font-bold tracking-wider mb-2">Activity Audit Trail</div>
-            <div id="logViewer" class="bg-[#0f0f11] p-3 rounded-lg h-20 overflow-y-auto font-mono text-[11px] text-gray-500 space-y-1"></div>
-        </section>
+        <div id="paneSettings" class="bg-cardBg border border-gray-800/60 p-5 rounded-2xl hidden space-y-4">
+            <h3 class="text-xs font-bold text-goldTheme uppercase tracking-wider"><i class="fa-solid fa-sliders mr-2"></i>Wedding Details & Configuration</h3>
+            <div class="space-y-3 text-xs">
+                <div>
+                    <label class="block text-gray-400 mb-1">သတို့သားအမည်</label>
+                    <input type="text" id="cfgGroom" class="w-full bg-inputBg border border-gray-800 rounded-xl p-2 text-white focus:outline-none">
+                </div>
+                <div>
+                    <label class="block text-gray-400 mb-1">သတို့သမီးအမည်</label>
+                    <input type="text" id="cfgBride" class="w-full bg-inputBg border border-gray-800 rounded-xl p-2 text-white focus:outline-none">
+                </div>
+                <div class="grid grid-cols-2 gap-2">
+                    <div>
+                        <label class="block text-gray-400 mb-1">မင်္ဂလာရက်စွဲ</label>
+                        <input type="date" id="cfgDate" class="w-full bg-inputBg border border-gray-800 rounded-xl p-2 text-white focus:outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-gray-400 mb-1">ကျင်းပမည့်နေရာ</label>
+                        <input type="text" id="cfgVenue" class="w-full bg-inputBg border border-gray-800 rounded-xl p-2 text-white focus:outline-none">
+                    </div>
+                </div>
+                <button id="saveConfigBtn" class="w-full bg-gradient-to-r from-emerald-500 to-teal-600 text-black font-bold py-2 rounded-xl text-xs transition">
+                    <i class="fa-solid fa-square-check mr-1"></i>ပွဲအချက်အလက်အကုန်လုံးကို သိမ်းမည်
+                </button>
+            </div>
+        </div>
     </main>
+
+    <div class="fixed bottom-0 left-0 right-0 bg-cardBg/95 backdrop-blur-md border-t border-gray-900 px-4 py-2 z-50">
+        <div class="max-w-md mx-auto flex justify-around text-center">
+            <button onclick="switchPanel('dashboard')" id="nav-dashboard" class="nav-item flex-1 py-1 text-goldTheme">
+                <i class="fa-solid fa-chart-pie text-lg block"></i><span class="text-[9px] font-medium mt-0.5 block">Dashboard</span>
+            </button>
+            <button onclick="switchPanel('guests')" id="nav-guests" class="nav-item flex-1 py-1 text-gray-500">
+                <i class="fa-solid fa-address-book text-lg block"></i><span class="text-[9px] font-medium mt-0.5 block">Guests</span>
+            </button>
+            <button onclick="switchPanel('addbox')" id="nav-addbox" class="nav-item flex-1 py-1 text-gray-500">
+                <i class="fa-solid fa-circle-plus text-lg block"></i><span class="text-[9px] font-medium mt-0.5 block">Add New</span>
+            </button>
+            <button onclick="switchPanel('logs')" id="nav-logs" class="nav-item flex-1 py-1 text-gray-500">
+                <i class="fa-solid fa-receipt text-lg block"></i><span class="text-[9px] font-medium mt-0.5 block">Logs</span>
+            </button>
+            <button onclick="switchPanel('settings')" id="nav-settings" class="nav-item flex-1 py-1 text-gray-500">
+                <i class="fa-solid fa-gears text-lg block"></i><span class="text-[9px] font-medium mt-0.5 block">Settings</span>
+            </button>
+        </div>
+    </div>
         <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
         import { 
-            getFirestore, collection, addDoc, updateDoc, doc, onSnapshot, query, orderBy, serverTimestamp 
+            getFirestore, collection, addDoc, updateDoc, deleteDoc, doc, onSnapshot, query, orderBy, serverTimestamp 
         } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
-        // KoKo's Firebase Account Credentials
+        // KoKo's Active Firebase Configuration
         const firebaseConfig = {
             apiKey: "AIzaSyA8_BFKL5Quyw_nnRU2MYTemsUZJm0pjMQ",
             authDomain: "wedding-app-1dc0f.firebaseapp.com",
@@ -305,233 +238,232 @@
 
         const guestsRef = collection(db, "guests");
         const logsRef = collection(db, "activity_logs");
-        const configRef = collection(db, "wedding_config");
+        const configRef = collection(db, "wedding_profile");
 
         let currentRole = 'admin';
         let guestsList = [];
+        let activeFilter = 'အားလုံး';
 
-        // Tab Navigation Controlling Elements
-        const btnTabInvite = document.getElementById('tabInvite');
-        const btnTabEvent = document.getElementById('tabEvent');
-        const paneInvite = document.getElementById('paneInvite');
-        const paneEvent = document.getElementById('paneEvent');
+        // --- 📱 TAB VIEW SWITCHING ENGINE ---
+        window.switchPanel = function(panelId) {
+            // Panels ဝှက်ခြင်း/ဖော်ခြင်း
+            document.getElementById('paneDashboard').classList.add('hidden');
+            document.getElementById('paneGuests').classList.add('hidden');
+            document.getElementById('paneAddBox').classList.add('hidden');
+            document.getElementById('paneLogs').classList.add('hidden');
+            document.getElementById('paneSettings').classList.add('hidden');
 
-        btnTabInvite.addEventListener('click', () => toggleTabs('invite'));
-        btnTabEvent.addEventListener('click', () => toggleTabs('event'));
+            const targetPane = 'pane' + panelId.charAt(0).toUpperCase() + panelId.slice(1);
+            document.getElementById(targetPane).classList.remove('hidden');
 
-        function toggleTabs(active) {
-            if (active === 'invite') {
-                paneInvite.classList.remove('hidden');
-                paneEvent.classList.add('hidden');
-                btnTabInvite.className = "px-5 py-3 text-sm font-bold border-b-2 border-weddingGold text-weddingGold focus:outline-none flex items-center space-x-2";
-                btnTabEvent.className = "px-5 py-3 text-sm font-medium border-b-2 border-transparent text-gray-400 hover:text-gray-200 focus:outline-none flex items-center space-x-2";
-            } else {
-                paneInvite.classList.add('hidden');
-                paneEvent.classList.remove('hidden');
-                btnTabEvent.className = "px-5 py-3 text-sm font-bold border-b-2 border-weddingGold text-weddingGold focus:outline-none flex items-center space-x-2";
-                btnTabInvite.className = "px-5 py-3 text-sm font-medium border-b-2 border-transparent text-gray-400 hover:text-gray-200 focus:outline-none flex items-center space-x-2";
-            }
+            // Fixed Bottom Nav Icon အရောင်ပြောင်းခြင်း
+            document.querySelectorAll('.nav-item').forEach(el => {
+                el.classList.remove('text-goldTheme');
+                el.classList.add('text-gray-500');
+            });
+            document.getElementById('nav-' + panelId).classList.add('text-goldTheme');
+            document.getElementById('nav-' + panelId).classList.remove('text-gray-500');
         }
 
-        // Toggle Config Box Window
-        document.getElementById('toggleConfigBtn').addEventListener('click', () => {
-            document.getElementById('configSection').classList.toggle('hidden');
-        });
-
-        // 🔐 Write Security Audit Log Function
-        async function createAuditLog(message) {
+        // 🔐 Write Activity Logs Function
+        async function logSystemTrail(message) {
             try {
                 await addDoc(logsRef, { user: currentRole, action: message, timestamp: serverTimestamp() });
-            } catch (err) { console.error(err); }
+            } catch (e) { console.error(e); }
         }
 
-        // 🔄 Sync Database Collections
-        function setupDatabaseSync() {
+        // 🔄 Firebase Database Initialization Sync
+        function startRealtimeSync() {
+            // 1. Listen for Guest Records
             onSnapshot(guestsRef, (snap) => {
                 guestsList = [];
                 snap.forEach(d => guestsList.push({ id: d.id, ...d.data() }));
-                renderApplicationState();
+                renderDashboardMetrics();
+                renderGuestListStack();
             });
 
-            // Sync Configuration Document
+            // 2. Listen for Wedding Header Profile Setup Data
             onSnapshot(configRef, (snap) => {
                 snap.forEach(d => {
                     const data = d.data();
                     if(data) {
-                        document.getElementById('displayGroom').innerText = data.groom || "သတို့သား";
-                        document.getElementById('displayBride').innerText = data.bride || "သတို့သမီး";
-                        document.getElementById('displayDate').innerText = data.date || "သတ်မှတ်ရန်";
-                        document.getElementById('displayVenue').innerText = data.venue || "သတ်မှတ်ရန်";
-                        if(data.photoUrl) document.getElementById('couplePhotoFrame').src = data.photoUrl;
+                        document.getElementById('headerGroom').innerText = data.groom || "သတို့သား";
+                        document.getElementById('headerBride').innerText = data.bride || "သတို့သမီး";
+                        document.getElementById('headerDate').innerText = data.date || "2026-06-09";
+                        document.getElementById('headerVenue').innerText = data.venue || "Hotel";
                     }
                 });
             });
 
-            // Sync Log Stream
+            // 3. Listen for System Logs Stream
             const q = query(logsRef, orderBy("timestamp", "desc"));
             onSnapshot(q, (snap) => {
-                const viewer = document.getElementById('logViewer');
-                viewer.innerHTML = '';
+                const logsWrapper = document.getElementById('logsWrapper');
+                logsWrapper.innerHTML = '';
                 snap.forEach(doc => {
                     const d = doc.data();
                     const t = d.timestamp ? new Date(d.timestamp.seconds * 1000).toLocaleTimeString() : 'Now';
-                    viewer.innerHTML += `<div>[${t}] [${d.user.toUpperCase()}]: ${d.action}</div>`;
+                    logsWrapper.innerHTML += `<div class="border-b border-gray-900/40 pb-0.5">[${t}] [${d.user.toUpperCase()}]: ${d.action}</div>`;
                 });
             });
         }
 
-        // Save Header Wedding configurations
+        // Save Header Configuration
         document.getElementById('saveConfigBtn').addEventListener('click', async () => {
             const data = {
                 groom: document.getElementById('cfgGroom').value,
                 bride: document.getElementById('cfgBride').value,
                 date: document.getElementById('cfgDate').value,
-                venue: document.getElementById('cfgVenue').value,
-                photoUrl: document.getElementById('cfgPhotoUrl').value
+                venue: document.getElementById('cfgVenue').value
             };
-            await addDoc(configRef, data); // Adds fresh metadata document
-            await createAuditLog("မင်္ဂလာပွဲ၏ အခြေခံ အချက်အလက်နှင့် UI ကို ပြောင်းလဲလိုက်သည်။");
-            document.getElementById('configSection').classList.add('hidden');
+            await addDoc(configRef, data);
+            await logSystemTrail("မင်္ဂလာပွဲ၏ Profile အချက်အလက် (သတို့သား/သမီး အမည်၊ ရက်စွဲ၊ နေရာ) ကို မွမ်းမံလိုက်သည်။");
+            switchPanel('dashboard');
         });
 
-        // TAB 1 FORM: Save Guest Invitation Details
-        const frmInvite = document.getElementById('frmInvite');
-        frmInvite.addEventListener('submit', async (e) => {
+        // Add/Edit Guest Form Submitting
+        const mainGuestForm = document.getElementById('mainGuestForm');
+        mainGuestForm.addEventListener('submit', async (e) => {
             e.preventDefault();
-            const id = frmInvite.querySelector('.g-id').value;
+            const id = document.getElementById('formGuestId').value;
             const data = {
-                name: frmInvite.querySelector('.g-name').value,
-                type: frmInvite.querySelector('.g-type').value,
-                status: frmInvite.querySelector('.g-status').value,
-                notes: frmInvite.querySelector('.g-notes').value
+                name: document.getElementById('formName').value,
+                type: document.getElementById('formType').value,
+                status: document.getElementById('formInviteStatus').value,
+                giftAmount: Number(document.getElementById('formGiftAmount').value) || 0,
+                giftItem: document.getElementById('formGiftItem').value,
+                attended: document.getElementById('formAttended').checked
             };
 
             if(id) {
                 await updateDoc(doc(db, "guests", id), data);
-                await createAuditLog(`ဧည့်သည်စာရင်းပြင်ဆင်မှု: "${data.name}"`);
+                await logSystemTrail(`ဧည့်သည် "${data.name}" ၏ ကိုယ်ရေးစာရင်းကို အဆင့်မြှင့်တင်ပြင်ဆင်လိုက်သည်။`);
             } else {
-                data.attended = false; data.giftAmount = 0; data.giftItem = "";
                 await addDoc(guestsRef, data);
-                await createAuditLog(`ဧည့်သည်စာရင်းအသစ်ထည့်သွင်းမှု: "${data.name}"`);
+                await logSystemTrail(`ဧည့်သည်စာရင်းသစ် ထည့်သွင်းခြင်း - "${data.name}"`);
             }
-            frmInvite.reset();
-            frmInvite.querySelector('.g-id').value = '';
+            mainGuestForm.reset();
+            document.getElementById('formGuestId').value = '';
+            switchPanel('guests');
         });
 
-        // Load targeted record safely to Wedding Day form fields
-        window.selectGuestForEvent = function(id) {
+        // Quick row-click activation actions
+        window.openEditGuest = function(id) {
             const g = guestsList.find(x => x.id === id);
             if(g) {
-                document.getElementById('wdId').value = g.id;
-                document.getElementById('wdGuestLabel').innerText = `👉 ${g.name} [${g.type}]`;
-                document.getElementById('wdAttended').checked = g.attended || false;
-                document.getElementById('wdAmount').value = g.giftAmount || 0;
-                document.getElementById('wdItem').value = g.giftItem || "";
-
-                const btn = document.getElementById('wdSubmitBtn');
-                btn.disabled = false;
-                btn.className = "w-full bg-gradient-to-r from-amber-500 to-amber-600 text-black font-bold py-2.5 rounded-lg transition shadow-lg shadow-amber-500/10 cursor-pointer";
+                document.getElementById('formGuestId').value = g.id;
+                document.getElementById('formName').value = g.name;
+                document.getElementById('formType').value = g.type;
+                document.getElementById('formInviteStatus').value = g.status;
+                document.getElementById('formGiftAmount').value = g.giftAmount || 0;
+                document.getElementById('formGiftItem').value = g.giftItem || "";
+                document.getElementById('formAttended').checked = g.attended || false;
+                
+                switchPanel('addbox');
+                document.querySelector('#paneAddBox h3').innerHTML = `<i class="fa-solid fa-user-pen mr-2 text-goldTheme"></i>ဧည့်သည်စာရင်း အချက်အလက် ပြင်ဆင်ရန်`;
             }
         }
 
-        // Quick Flip Checkbox Event logic from row view
-        window.quickToggleAttendance = async function(id, state, name) {
-            await updateDoc(doc(db, "guests", id), { attended: !state });
-            await createAuditLog(`ပွဲနေ့ Check-In ပြောင်းလဲခြင်း: "${name}" -> [${!state ? 'ရောက်ရှိ' : 'မရောက်သေး'}]`);
+        window.quickChangeAttendance = async function(id, currentState) {
+            await updateDoc(doc(db, "guests", id), { attended: !currentState });
+            const name = guestsList.find(x => x.id === id)?.name || '';
+            await logSystemTrail(`ပွဲနေ့ Check-In အမြန်အမှန်ခြစ်ခြင်း: "${name}"`);
         }
 
-        // TAB 2 FORM: Submit Wedding Day Gift and Attendance
-        const frmEvent = document.getElementById('frmEvent');
-        frmEvent.addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const id = document.getElementById('wdId').value;
-            if(!id) return;
+        // Live filtering triggers
+        window.filterGuests = function(type) {
+            activeFilter = type;
+            // Active Sub-tab Highlight UI styling
+            document.querySelectorAll('.subtab-btn').forEach(btn => {
+                btn.className = "subtab-btn flex-1 py-1.5 rounded-lg text-center font-medium text-gray-400";
+                if(btn.innerText.trim() === type || (type === 'အားလုံး' && btn.innerText.trim() === 'အားလုံး')) {
+                    btn.className = "subtab-btn flex-1 py-1.5 rounded-lg text-center font-medium bg-inputBg text-goldTheme";
+                }
+            });
+            renderGuestListStack();
+        }
 
-            const data = {
-                attended: document.getElementById('wdAttended').checked,
-                giftAmount: Number(document.getElementById('wdAmount').value) || 0,
-                giftItem: document.getElementById('wdItem').value
-            };
+        // Live local filtering search
+        window.searchGuests = function() {
+            renderGuestListStack();
+        }
 
-            await updateDoc(doc(db, "guests", id), data);
-            const name = guestsList.find(x => x.id === id)?.name || '';
-            await createAuditLog(`ပွဲနေ့လက်ဖွဲ့ မှတ်တမ်းတင်ပြီး: "${name}" [ငွေ: ${data.giftAmount} / ပစ္စည်း: ${data.giftItem || 'မရှိ'}]`);
-            
-            frmEvent.reset();
-            document.getElementById('wdId').value = '';
-            document.getElementById('wdGuestLabel').innerText = "စာရင်းမှ ဧည့်သည်ကို ရွေးချယ်ပါ ⬇️";
-            const btn = document.getElementById('wdSubmitBtn');
-            btn.disabled = true;
-            btn.className = "w-full bg-gray-700 text-gray-400 font-bold py-2.5 rounded-lg cursor-not-allowed transition";
-        });
-
-        // Securing Fields by active Role Selector
-        document.getElementById('roleSelect').addEventListener('change', (e) => {
-            currentRole = e.target.value;
-            renderApplicationState();
-        });
-
-        // 📊 DASHBOARD CALCULATION ENGINE
-        function renderApplicationState() {
+        // 📊 DASHBOARD MATHEMATICS ENGINE
+        function renderDashboardMetrics() {
             const total = guestsList.length;
             const invited = guestsList.filter(x => x.status === 'ဖိတ်ကြားထားပြီး').length;
             const attended = guestsList.filter(x => x.attended).length;
             const drafted = guestsList.filter(x => x.status === 'ရေးသားပြီး').length;
             const pending = guestsList.filter(x => x.status === 'မရေးရသေး').length;
-            const totalGifts = guestsList.reduce((sum, x) => sum + (x.giftAmount || 0), 0);
+            const totalGiftsSum = guestsList.reduce((sum, x) => sum + (x.giftAmount || 0), 0);
 
-            // Print numbers
-            document.getElementById('statTotal').innerText = total;
-            document.getElementById('statInvited').innerText = invited;
-            document.getElementById('statAttended').innerText = attended;
-            document.getElementById('statDrafted').innerText = drafted;
-            document.getElementById('statPending').innerText = pending;
+            document.getElementById('dashTotal').innerText = total;
+            document.getElementById('dashInvited').innerText = invited;
+            document.getElementById('dashAttended').innerText = attended;
+            document.getElementById('dashDrafted').innerText = drafted;
+            document.getElementById('dashPending').innerText = pending;
 
-            // Mathematical Progress calculations
             const invitePct = total ? Math.round((invited / total) * 100) : 0;
             const attendPct = total ? Math.round((attended / total) * 100) : 0;
 
-            document.getElementById('lblProgressInvite').innerText = invitePct + "%";
-            document.getElementById('barProgressInvite').style.width = invitePct + "%";
-            document.getElementById('lblProgressAttend').innerText = attendPct + "%";
-            document.getElementById('barProgressAttend').style.width = attendPct + "%";
+            document.getElementById('txtPctInvite').innerText = invitePct + "%";
+            document.getElementById('barPctInvite').style.width = invitePct + "%";
+            document.getElementById('txtPctAttend').innerText = attendPct + "%";
+            document.getElementById('barPctAttend').style.width = attendPct + "%";
 
-            // Encrypted View logic masking financials for Staff role
-            document.getElementById('dashFinancialSum').innerText = currentRole === 'admin' ? `${totalGifts.toLocaleString()} Kyats` : `****** Kyats`;
+            // Encrypted values according to active Account Roles
+            document.getElementById('dashGiftAmount').innerText = currentRole === 'admin' ? `${totalGiftsSum.toLocaleString()} Ks` : `****** Ks`;
+        }
 
-            // Render Table Tab 1
-            const tbodyInvite = document.getElementById('tbodyInvite');
-            tbodyInvite.innerHTML = '';
-            guestsList.forEach(g => {
-                tbodyInvite.innerHTML += `
-                    <tr class="hover:bg-gray-900/30 border-b border-gray-900 text-xs">
-                        <td class="p-3">
-                            <div class="font-bold text-gray-200">${g.name}</div>
-                            <div class="text-[10px] text-weddingGold/60">${g.type}</div>
-                        </td>
-                        <td class="p-3"><span class="px-2 py-0.5 rounded text-[10px] font-bold ${g.status === 'ဖိတ်ကြားထားပြီး' ? 'bg-amber-400/10 text-amber-300 border border-amber-400/20' : 'bg-gray-800 text-gray-400'}">${g.status}</span></td>
-                        <td class="p-3 text-gray-500">${g.notes || '-'}</td>
-                        <td class="p-3 text-right"><button onclick="selectGuestForEvent('${g.id}'); document.getElementById('tabEvent').click();" class="text-weddingGold hover:underline font-medium">ပွဲနေ့စာရင်းသို့ ➡️</button></td>
-                    </tr>`;
+        // 👥 GUEST ROWS STACK ENGINE
+        function renderGuestListStack() {
+            const stack = document.getElementById('guestRowsStack');
+            stack.innerHTML = '';
+
+            const searchTerm = document.getElementById('guestSearchInput').value.toLowerCase();
+
+            const filtered = guestsList.filter(g => {
+                const matchesTab = (activeFilter === 'အားလုံး' || g.type === activeFilter);
+                const matchesSearch = g.name.toLowerCase().includes(searchTerm);
+                return matchesTab && matchesSearch;
             });
 
-            // Render Table Tab 2
-            const tbodyEvent = document.getElementById('tbodyEvent');
-            tbodyEvent.innerHTML = '';
-            guestsList.forEach(g => {
-                const amtView = currentRole === 'admin' ? `${(g.giftAmount || 0).toLocaleString()} Ks` : '🔒 Hidden';
-                const itemView = g.giftItem ? ` + [${g.giftItem}]` : '';
-                tbodyEvent.innerHTML += `
-                    <tr class="hover:bg-gray-900/30 border-b border-gray-900 text-xs">
-                        <td class="p-3"><input type="checkbox" ${g.attended ? 'checked' : ''} onclick="quickToggleAttendance('${g.id}', ${g.attended}, '${g.name}')" class="w-4 h-4 text-amber-500 rounded bg-transparent border-gray-700"></td>
-                        <td class="p-3 font-bold text-gray-200"><div>${g.name}</div><div class="text-[10px] text-gray-400 font-normal">${g.type}</div></td>
-                        <td class="p-3 font-mono text-weddingGold">${amtView}${itemView}</td>
-                        <td class="p-3 text-right"><button onclick="selectGuestForEvent('${g.id}')" class="bg-[#1e1e24] border border-gray-800 text-gray-300 px-2.5 py-1 rounded-md hover:border-weddingGold transition"><i class="fa-solid fa-pen-clip"></i> ရွေးချယ်ရန်</button></td>
-                    </tr>`;
+            if(filtered.length === 0) {
+                stack.innerHTML = `<div class="text-xs text-center text-gray-500 py-8">ဧည့်သည် စာရင်းမရှိသေးပါ 🍃</div>`;
+                return;
+            }
+
+            filtered.forEach(g => {
+                const giftDisplay = g.giftItem ? ` + [${g.giftItem}]` : '';
+                const amountDisplay = currentRole === 'admin' ? `${(g.giftAmount || 0).toLocaleString()} Ks` : '🔒 Hidden';
+
+                const div = document.createElement('div');
+                div.className = "bg-cardBg border border-gray-800/60 p-3 rounded-xl flex items-center justify-between text-xs transition hover:border-gray-700";
+                div.innerHTML = `
+                    <div class="flex items-center space-x-3">
+                        <input type="checkbox" ${g.attended ? 'checked' : ''} onclick="quickChangeAttendance('${g.id}', ${g.attended})" class="w-4 h-4 text-amber-500 rounded bg-transparent border-gray-700">
+                        <div>
+                            <div class="font-bold text-gray-100">${g.name}</div>
+                            <div class="text-[10px] text-gray-400 mt-0.5">${g.type} • <span class="text-goldTheme/70">${g.status}</span></div>
+                        </div>
+                    </div>
+                    <div class="text-right flex items-center space-x-3">
+                        <div class="font-mono text-[11px] text-gray-300">${amountDisplay}${giftDisplay}</div>
+                        <button onclick="openEditGuest('${g.id}')" class="p-1 text-gray-500 hover:text-goldTheme"><i class="fa-solid fa-user-pen"></i></button>
+                    </div>
+                `;
+                stack.appendChild(div);
             });
         }
 
-        setupDatabaseSync();
+        // Account Switch Permissions Role Handling Toggle
+        document.getElementById('roleSelect').addEventListener('change', (e) => {
+            currentRole = e.target.value;
+            renderDashboardMetrics();
+            renderGuestListStack();
+        });
+
+        startRealtimeSync();
     </script>
 </body>
 </html>
